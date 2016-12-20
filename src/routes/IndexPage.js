@@ -2,7 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'dva';
 import { Link } from 'dva/router';
 //import styles from './IndexPage.css';
-import MenuList from '../components/MenuList.js'
+import MenuList from '../components/MenuList'
+import MainPage from '../components/MainPage'
 
 
 const IndexPage = ({dispatch, brands})=>{
@@ -13,13 +14,13 @@ const IndexPage = ({dispatch, brands})=>{
     })
   }
   return (
-    <div>
-      <MenuList brandList={brands}/>
-      <h2 onClick={handleClick}>Menu list</h2>
-    </div>
+    <MainPage>
+     <MenuList brandList={brands} style={{display:'none'}} />
+      <h2 onClick={handleClick} style={{display:'none'}}>Menu list</h2>
+    </MainPage>
     )
 }
 function mapStateToProps({brands}) {
   return {brands}
 }
-export default connect(mapStateToProps)(IndexPage);
+export default connect()(IndexPage);

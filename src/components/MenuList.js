@@ -5,7 +5,7 @@ class MenuList extends Component {
   render(){
     const { clickHandle, brandList } = this.props
     return (
-      <Menu theme="dark" mode="horizontal"
+      <Menu mode="horizontal"
           defaultSelectKeys={['2']}
           style={{lineHeight: '64px'}}>
           {brandList.map(brand=>{
