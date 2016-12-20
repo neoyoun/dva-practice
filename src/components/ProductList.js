@@ -1,32 +1,35 @@
-import React, { PropTypes } from 'react'
+import React,{ Component, PropTypes } from 'react'
 import { Table, Popconfirm, Button } from 'antd'
 
-const ProductList = ({onDelete, products}) => {
-  const columns = [{
-    title:'产品名',
-    dataIndex: 'name',
-  },{
-    title: '产品ID',
-    render: (text, record)=>{
-      return (
-        <Popconfirm title="delete?" onConfirm={()=>onDelete(record.id)}>
-          <Button>Delete</Button>
-        </Popconfirm>
-        )
-    }
-  }];
-
-  return (
+class ProductList extends Component {
+  render(){
+    const { onDelete, products } = this.props
+    const columns = [{
+      title:'品牌',
+      dataIndex: 'name'
+    },{
+      title:'配件代码',
+      dataIndex: 'code'
+    },{
+      title:'Actions',
+      render: (text, record)=>{
+        return (
+          <Popconfirm title={"delete "+text['name']+"?"} onConfirm={()=>onDelete(record.id)}>
+            <Button>delete</Button>
+          </Popconfirm>
+          )
+      }
+    }];
+    return (
       <Table
-        dataSource = {products}
-        columns={columns}
-        />
-    )
+        dataSource={products}
+        columns = {columns}
+      />
+      )
+  }
 }
-
-ProductList.PropTypes = {
+ProductList.propTypes = {
   onDelete:PropTypes.func.isRequired,
   products:PropTypes.array.isRequired
 }
-
 export default ProductList

@@ -1,22 +1,23 @@
 import React from 'react'
-import { connect, dispatch } from 'dva'
-import ProductList from '../components/ProductList'
+import { connect } from 'dva'
+import ProductList from '../components/ProductList.js'
 
-const Products = ({ dispatch, products})=>{
-  return(
-      <div>
-        <h2>List of Products</h2>
-        <ProductList onDelete={deleteHandle} products={products}/>
-      </div>
-    )
-  function deleteHandle(id) {
+const Products = ({ dispatch, products })=>{
+  function handleDelete(id) {
     dispatch({
-      type: 'products/delete',
+      type:'products/delete',
       payload: id
     })
   }
+  return (
+    <div>
+      <h2>产品列表</h2>
+      <ProductList products={products} onDelete={handleDelete} />
+    </div>
+    )
 }
 
-export default connect(({ products })=>({
-  products,
-}))(Products)
+function mapStateToProps({products}) {
+  return { products }
+}
+export default connect(mapStateToProps)(Products)

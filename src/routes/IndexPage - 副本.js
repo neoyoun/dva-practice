@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'dva';
 import { Link } from 'dva/router';
 import styles from './IndexPage.css';
+import { Popover, Button } from 'antd'
 
 function IndexPage() {
   return (
@@ -12,7 +13,6 @@ function IndexPage() {
         <li>To get started, edit <code>src/index.js</code> and save to reload.</li>
         <li><a href="https://github.com/dvajs/dva-docs/blob/master/v1/en-us/getting-started.md" target="_blank">Getting Started</a></li>
       </ul>
-      <h2><a href="/#/products">products</a></h2>
     </div>
   );
 }
