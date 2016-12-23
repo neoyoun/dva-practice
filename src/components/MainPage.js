@@ -1,56 +1,70 @@
 import React, { Component, PropTypes } from 'react'
-import { Menu, Breadcrumb, Icon } from 'antd'
+import ReactDOM from 'react-dom'
+import { Menu, Breadcrumb, Icon, Switch } from 'antd'
 import styles from './MainPage.module.less'
 
 const SubMenu = Menu.SubMenu
+const MenuItemGroup = Menu.ItemGroup
 class MainPage extends Component {
+  menuClickHandle(item,key){
+    let itemNode = ReactDOM.findDOMNode(item.item)
+    console.log('click key is ',key)
+  }
+  subMenuOpen(openkeys){
+    console.log(openkeys)
+    if(openkeys.length>1){
+      openkeys.shift()
+    }
+    console.log(openkeys)
+  }
   render() {
+    const { clickHandle, brandList, menu, onThemeChange } = this.props
     return (
         <div className={styles['layout-aside']}>
           <aside className={styles['layout-sider']}>
             <div className={styles['layout-logo']}></div>
-            <Menu mode="inline" defaultOpenKeys={['sub4']} defaultSelectedKeys={['1']} >
-              <SubMenu key='sub1' title={<span><Icon type='user' />导航一</span>}>
-                <Menu.Item key='1'>选项1</Menu.Item>
-                <Menu.Item key='2'>选项2</Menu.Item>
-                <Menu.Item key='3'>选项3</Menu.Item>
-                <Menu.Item key='4'>选项4</Menu.Item>
-                <Menu.Item key='5'>选项5</Menu.Item>
-              </SubMenu>
-              <SubMenu key='sub2' title={<span><Icon type='laptop' />导航二</span>}>
-                <Menu.Item key='6'>选项1</Menu.Item>
-                <Menu.Item key='7'>选项2</Menu.Item>
-                <Menu.Item key='8'>选项3</Menu.Item>
-                <Menu.Item key='9'>选项4</Menu.Item>
-                <Menu.Item key='10'>选项5</Menu.Item>
-              </SubMenu>
-              <SubMenu key='sub3' title={<span><Icon type='user' />导航三</span>}>
-                <Menu.Item key='11'>选项1</Menu.Item>
-                <Menu.Item key='12'>选项2</Menu.Item>
-                <Menu.Item key='13'>选项3</Menu.Item>
-                <Menu.Item key='14'>选项4</Menu.Item>
-                <Menu.Item key='15'>选项5</Menu.Item>
-              </SubMenu>
-              <SubMenu key='sub4' title={<span><Icon type='user' />导航四</span>}>
-                <Menu.Item key='1'>选项1</Menu.Item>
-                <Menu.Item key='2'>选项2</Menu.Item>
-                <Menu.Item key='3'>选项3</Menu.Item>
-                <Menu.Item key='4'>选项4</Menu.Item>
-                <Menu.Item key='5'>选项5</Menu.Item>
-              </SubMenu>
+            <Switch
+              checked={menu.theme === 'dark'}
+              onChange={(val)=>{
+                let theme = val?'dark':'light'
+                onThemeChange(theme)
+              }}
+              checkedChildren="Dark"
+              unCheckedChildren="light" />
+            <Menu mode="inline" theme={menu.theme} onOpenChange={this.subMenuOpen} onClick={(item,key)=>this.menuClickHandle(item, item.key)} defaultOpenKeys={['sub4']} defaultSelectedKeys={['1']} >
+              {brandList.map( brand =>{
+               return (
+                <SubMenu key={'sub'+brand.id} title={<span><Icon type='tablet'/>{brand.name}</span>}>
+                <MenuItemGroup title="group1">
+                  <Menu.Item key={brand.id+'_1'}>选项1</Menu.Item>
+                  <Menu.Item key={brand.id+'_2'}>选项2</Menu.Item>
+                </MenuItemGroup>
+                <MenuItemGroup title="group2">
+                  <Menu.Item key={brand.id+'_3'}>选项3</Menu.Item>
+                  <Menu.Item key={brand.id+'_4'}>选项4</Menu.Item>
+                  <Menu.Item key={brand.id+'_5'}>选项5</Menu.Item>
+                </MenuItemGroup>
+                </SubMenu>
+                )
+              })}
             </Menu>
           </aside>
           <div className={styles['layout-main']}>
             <div className={styles['layout-header']}></div>
             <div className={styles['layout-container']}>
-              <div className={styles['layout-breadcrumb']}>
+              <Menu mode="horizontal">
+                {brandList.map((brand, idx)=>{
+                  return (<Menu.Item key={'topmenu'+idx}>{brand.name+' topmenu'+idx}</Menu.Item>)
+                })}
+              </Menu>
+              {/*<div className={styles['layout-breadcrumb']}>
                 <Breadcrumb>
                   <Breadcrumb.Item>首页</Breadcrumb.Item>
                   <Breadcrumb.Item>产品分类</Breadcrumb.Item>
                   <Breadcrumb.Item>当前分类</Breadcrumb.Item>
                   <Breadcrumb.Item>海格客车</Breadcrumb.Item>
                 </Breadcrumb>
-              </div>
+              </div>*/}
               <div className={styles['layout-content']}>
 
               </div>

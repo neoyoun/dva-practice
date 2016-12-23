@@ -6,21 +6,29 @@ import MenuList from '../components/MenuList'
 import MainPage from '../components/MainPage'
 
 
-const IndexPage = ({dispatch, brands})=>{
+const IndexPage = ({dispatch, brands, menu})=>{
   function handleClick() {
     dispatch({
       type:'brands/logger',
       payload: 1
     })
   }
+  function themeChangeHandle(theme) {
+    console.log('indexpage theme change to ',theme)
+    console.log(menu)
+    dispatch({
+      type:'menu/changeTheme',
+      text:theme
+    })
+  }
   return (
-    <MainPage>
-     <MenuList brandList={brands} style={{display:'none'}} />
-      <h2 onClick={handleClick} style={{display:'none'}}>Menu list</h2>
-    </MainPage>
+    <MainPage brandList={brands} menu={menu} clickHandle={handleClick} onThemeChange={themeChangeHandle}/>
     )
 }
-function mapStateToProps({brands}) {
-  return {brands}
+function mapStateToProps({brands,menu}) {
+  return {brands,menu}
 }
-export default connect()(IndexPage);
+/*function mapStateToProps({menu}) {
+  return {menu}
+}*/
+export default connect(mapStateToProps)(IndexPage);

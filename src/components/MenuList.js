@@ -4,11 +4,12 @@ import { Menu, Button } from 'antd'
 class MenuList extends Component {
   render(){
     const { clickHandle, brandList } = this.props
+    console.log(brandList)
     return (
       <Menu mode="horizontal"
           defaultSelectKeys={['2']}
           style={{lineHeight: '64px'}}>
-          {brandList.map(brand=>{
+          {brandList !== undefined && brandList.map(brand=>{
             return <Menu.Item key={brand.id} onSelect={()=>clickHandle(brand.id)} >{brand.name}</Menu.Item>
           })}
           <Menu.Item><a href="/#/products">产品列表</a></Menu.Item>
