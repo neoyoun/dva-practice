@@ -6,13 +6,11 @@ import styles from './IndexPage.less';
 import MenuList from '../components/MenuList'
 import GoodList from '../components/GoodList'
 
-
 const IndexPage = ({dispatch, cates, menu, goods})=>{
-  function setCateHandle(cateid) {
-    console.log('sunmenu >>',cateid)
+  function setCateHandle(cateId) {
     dispatch({
       type:'goods/setCateId',
-      payload: cateid
+      payload: cateId
     })
   }
   function goodsDelete(id) {

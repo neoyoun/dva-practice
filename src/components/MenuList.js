@@ -19,7 +19,7 @@ class MenuList extends Component {
         <Menu mode="vertical" theme={menu.theme} onClick={item=>setCateHandle(item.key)} >
           {cateList.list.map( cate=>{
            return (
-            <SubMenu onTitleClick={()=>setCateHandle()} key={cate.id} title={<span><Icon type='tablet'/>{cate.name}</span>}>
+            <SubMenu onTitleClick={ () => setCateHandle(cate.id) } key={cate.id} title={<span><Icon type='tablet'/>{cate.name}</span>}>
               {
                 cate.subCates.map(subCate=>{
                  return <Menu.Item key={subCate.id}>{subCate.name}</Menu.Item>

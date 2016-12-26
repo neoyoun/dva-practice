@@ -6,7 +6,7 @@ export default {
     list:[],
     loading:false,
     current:null,
-    currentItme:null,
+    currentItime:null,
     cateId:1
   },
   reducers:{
