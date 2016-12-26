@@ -4,7 +4,7 @@
   height: 100%;
 
   .layout-sider {
-    width:224px;
+    width: 220px;
     background-color: #f8f8f8;
     position: absolute;
     overflow: visible;
@@ -19,11 +19,17 @@
       border-radius: 6px;
       margin: 16px 24px 16px 28px;
     }
+    :global(.ant-menu-vertical.ant-menu-sub){
+      width: 500px;
+      &>li{
+        float: left
+      }
+    }
   }
 
   .layout-main{
+    margin-left: 230px;
     position: relative;
-    margin-left: 224px;
     min-height: 100%;
     padding-bottom: 24px;
 

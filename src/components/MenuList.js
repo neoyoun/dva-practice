@@ -1,19 +1,35 @@
 import React,{ Component, PropTypes } from 'react'
-import { Menu, Button } from 'antd'
+import { Menu, Breadcrumb, Icon, Switch } from 'antd'
 
+const SubMenu = Menu.SubMenu
 class MenuList extends Component {
   render(){
-    const { clickHandle, brandList } = this.props
-    console.log(brandList)
+    const { styles, cateList, onThemeChange, menu, setCateHandle } = this.props
     return (
-      <Menu mode="horizontal"
-          defaultSelectKeys={['2']}
-          style={{lineHeight: '64px'}}>
-          {brandList !== undefined && brandList.map(brand=>{
-            return <Menu.Item key={brand.id} onSelect={()=>clickHandle(brand.id)} >{brand.name}</Menu.Item>
+      <aside className={styles['layout-sider']}>
+        <div className={styles['layout-logo']}>玉柴商品分类</div>
+        <Switch
+          checked={menu.theme === 'dark'}
+          onChange={(val)=>{
+            let theme = val?'dark':'light'
+            onThemeChange(theme)
+          }}
+          checkedChildren="Dark"
+          unCheckedChildren="light" />
+        <Menu mode="vertical" theme={menu.theme} onClick={item=>setCateHandle(item.key)} >
+          {cateList.list.map( cate=>{
+           return (
+            <SubMenu onTitleClick={()=>setCateHandle()} key={cate.id} title={<span><Icon type='tablet'/>{cate.name}</span>}>
+              {
+                cate.subCates.map(subCate=>{
+                 return <Menu.Item key={subCate.id}>{subCate.name}</Menu.Item>
+                })
+              }
+            </SubMenu>
+            )
           })}
-          <Menu.Item><a href="/#/products">产品列表</a></Menu.Item>
-      </Menu>
+        </Menu>
+      </aside>
       )
   }
 }
