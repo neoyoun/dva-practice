@@ -1,26 +1,28 @@
-import dva from 'dva'
-import goodsInfo from '../../codes/goodsInfo.json'
+
 export default {
-  namespace:'goods',
-  state:{
-    list:[],
-    loading:false,
-    current:null,
-    currentItime:null,
-    cateId:1
+
+  namespace: 'example',
+
+  state: {
+    activeType:null,
+
+    lists:{},
   },
-  reducers:{
-    setCateId(state, { payload:id }){
-      let list= [];
-      goodsInfo.forEach(item=>{
-        if(item.id == id || item.parentId == id){
-          list.push(item.goods)
-        }
-      })
-      list = list.reduce((prevArr, nextArr)=>{
-        return prevArr.concat(nextArr)
-      })
-      return Object.assign({},state, {list:list, cateId:id})
+
+  subscriptions: {
+    setup({ dispatch, history }) {
     },
-  }
+  },
+
+  effects: {
+    *fetchRemote({ payload }, { call, put }) {
+    },
+  },
+
+  reducers: {
+    fetch(state, action) {
+      return { ...state, ...action.payload };
+    },
+  },
+
 }

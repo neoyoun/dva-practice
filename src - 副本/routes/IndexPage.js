@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'dva';
 import { Link } from 'dva/router';
-import { Row, Col } from 'antd'
 import styles from './IndexPage.less';
 import MenuList from '../components/MenuList'
 import GoodList from '../components/GoodList'
@@ -51,7 +50,5 @@ const IndexPage = ({dispatch, cates, menu, goods})=>{
 function mapStateToProps({cates, menu, goods}) {
   return {cates, menu, goods}
 }
-/*function mapStateToProps({menu}) {
-  return {menu}
-}*/
+
 export default connect(mapStateToProps)(IndexPage);

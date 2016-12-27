@@ -1,5 +1,6 @@
 import React,{ Component, PropTypes } from 'react'
 import { Table, Popconfirm, Button } from 'antd'
+import { Link } from 'dva/router'
 
 class GoodList extends Component {
   render(){
@@ -17,9 +18,7 @@ class GoodList extends Component {
       title:'Actions',
       render: (text, record)=>{
         return (
-          <Popconfirm title={"delete "+text['name']+"?"} onConfirm={()=>onDelete(record.id)}>
-            <Button>delete</Button>
-          </Popconfirm>
+          <Link to={'/goodList/'+text.code}>{text.name}</Link>
           )
       }
     }];
