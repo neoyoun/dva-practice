@@ -1,19 +1,29 @@
 import React from 'react';
 import { connect } from 'dva'
+import { Link, routerRedux } from 'dva/router'
 import { Table, Pagination, Popconfirm } from 'antd'
 import styles from './Users.css';
 import { PAGE_SIZE } from '../../constant'
+import UserEditModal from './UserEditModal'
 
-function Users({ list: dataSource, total, page: current }) {
+function Users({ dispatch, list: dataSource, loading, total, page: current,children,}) {
   function deleteHandle(id) {
     console.warn(`TODO:${id}`)
+    dispatch({
+      type:'users/remove',
+      payload: id
+    })
+  }
+  function editHandler(id) {
+    console.log('edit usersinfo')
+    console.dir(info)
   }
   const columns = [
     {
       title:'Name',
       dataIndex:'name',
       key:'name',
-      render: text=> <a href="">{text}</a>
+      render: (text, {id})=> <Link to={`/users/${id}/`}>{text}</Link>
     },
     {
       title:'Email',
@@ -24,7 +34,7 @@ function Users({ list: dataSource, total, page: current }) {
       title:'website',
       dataIndex:'website',
       key:'website',
-      render: text=> <a href={text}>website</a>
+      render: text=> <a href={'/'+text}>website</a>
     },
     {
       title:'username',
@@ -33,21 +43,30 @@ function Users({ list: dataSource, total, page: current }) {
     {
       title:'Operation',
       key:'operation',
-      render: (text, {id})=>(
+      render: (text, record)=>(
         <span className={styles.operation}>
-          <a href="">Edit</a>
-          <Popconfirm title="Confirm to delete?" onConfirm={deleteHandle.bind(null, id)}>
-            <a href="">Delete</a>
+          <UserEditModal record={record} onOk={editHandler.bind(null, record.id)}>
+             <a>Edit</a>
+          </UserEditModal>
+          <Popconfirm title="Confirm to delete?" onConfirm={deleteHandle.bind(null, record.id)}>
+            <a>Delete</a>
           </Popconfirm>
         </span>
         )
     }
   ]
+  function changPageHandle(page) {
+    dispatch(routerRedux.push({
+      pathname:'/users',
+      query: {page}
+    }))
+  }
   return (
     <div className={styles.normal}>
       <Table
         columns={columns}
         dataSource={dataSource}
+        loading={loading}
         rowKey={record=>record.id}
         pagination={false}
         />
@@ -56,18 +75,19 @@ function Users({ list: dataSource, total, page: current }) {
         total={total}
         current={current}
         pageSize={PAGE_SIZE}
+        onChange={changPageHandle}
         />
     </div>
   );
 }
 
 function mapStateToProps(state) {
-  console.log(state.users)
-  const {list, total} = state.users
+  const {list, total, page} = state.users
   return {
+    loading:state.loading.models.users,
     list,
     total,
-    current:1
+    page
   }
 }
 export default connect(mapStateToProps)(Users);

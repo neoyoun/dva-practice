@@ -1,6 +1,7 @@
 import dva from 'dva';
 import './index.html';
 import './index.css';
+import createLoading from 'dva-loading';
 
 // 1. Initialize
 const app = dva();
@@ -8,7 +9,7 @@ const app = dva();
 app.model(require("./models/users"));
 
 // 2. Plugins
-// app.use({});
+app.use(createLoading());
 
 // 3. Model
  //app.model(require('./models/users'));
@@ -18,3 +19,5 @@ app.router(require('./router'));
 
 // 5. Start
 app.start('#root');
+
+window.App = app;

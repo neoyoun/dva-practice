@@ -4,12 +4,11 @@ import styles from './Users.css';
 import UsersComponent from '../components/Users/Users';
 import MainLayout from '../components/MainLayout/MainLayout';
 
-function Users({ location }) {
-  console.log('mailayout.....');
+function Users({ location, children }) {
   return (
     <MainLayout location={location} >
       <div className={styles.normal}>
-        <UsersComponent />
+        {children?children:<UsersComponent />}
       </div>
     </MainLayout>
   );

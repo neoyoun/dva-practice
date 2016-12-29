@@ -7,7 +7,9 @@ function MainLayout({ children, location }) {
     <div className={styles.normal}>
       <Header location={location} />
       <div className={styles.content}>
+        <div className={styles.main}>
         {children}
+        </div>
       </div>
     </div>
     )
