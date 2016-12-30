@@ -1,6 +1,10 @@
 
 .normal {
 }
+.normal .create{
+  margin-bottom: 1.5em
+}
 .operation a{
   padding:0px 5px;
 }
+

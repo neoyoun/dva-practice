@@ -8,15 +8,22 @@ import UserEditModal from './UserEditModal'
 
 function Users({ dispatch, list: dataSource, loading, total, page: current,children,}) {
   function deleteHandle(id) {
-    console.warn(`TODO:${id}`)
     dispatch({
       type:'users/remove',
       payload: id
     })
   }
-  function editHandler(id) {
-    console.log('edit usersinfo')
-    console.dir(info)
+  function editHandler(id,values) {
+    dispatch({
+      type:'users/patch',
+      payload:{id, values}
+    })
+  }
+  function createHandler(values) {
+    dispatch({
+      type:'users/create',
+      payload:{values}
+    })
   }
   const columns = [
     {
@@ -63,6 +70,11 @@ function Users({ dispatch, list: dataSource, loading, total, page: current,child
   }
   return (
     <div className={styles.normal}>
+      <div className={styles.create}>
+        <UserEditModal record={{}} onOk={createHandler.bind(null)}>
+          <a>create</a>
+        </UserEditModal>
+      </div>
       <Table
         columns={columns}
         dataSource={dataSource}

@@ -1,5 +1,4 @@
 import React,{ Component, PropTypes } from 'react';
-import styles from './UserEditModal.css';
 import { Modal, Form, Input } from 'antd'
 
 const FormItem = Form.Item
@@ -24,8 +23,14 @@ class UserEditModal extends Component {
       })
   }
   handleOk = () =>{
-    console.log('ok....')
-    this.hideModalHandle()
+    console.log('submit....')
+    const { onOk } = this.props
+    this.props.form.validateFields((err, values)=>{
+      if(!err){
+        onOk(values)
+        this.hideModalHandle()
+      }
+    })
   }
   handleCancel = () =>{
     console.log('cancel....')
